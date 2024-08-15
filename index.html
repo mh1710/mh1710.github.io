@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quanto Tempo Falta pra Sabrina Descansar?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        #checklist-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+            text-align: left;
+        }
+        .checklist-item {
+            margin: 10px 0;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        .checklist-item input[type="checkbox"] {
+            width: 25px;
+            height: 25px;
+            margin-right: 15px;
+            accent-color: red;
+        }
+        #action-button {
+            padding: 12px 24px;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+        #confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flipdown/dist/flipdown.min.css">
+</head>
+<body>
+
+    <h1>QUANTO TEMPO FALTA PRA SABRINA (Meu Amor) DESCANSAR?</h1>
+    <div id="flipdown" class="flipdown"></div>
+
+    <div id="checklist-container">
+        <h2>Veja se está pronta para dormir?</h2>
+        <div class="checklist-item">
+            <input type="checkbox" id="eat"> Comer
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="notify-everyone"> Avisar todo mundo que vai dormir
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="notify-love"> Avisar o amor da sua vida que está indo dormir
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="send-photo"> Mandar uma foto deitada pra ele
+        </div>
+
+        <p>Vai fazer isso?</p>
+        <button id="action-button">SIM</button>
+    </div>
+
+    <canvas id="confetti" class="hidden"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/flipdown/dist/flipdown.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        // Timer
+        const now = new Date();
+        let targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 18, 0, 0);
+        if (now > targetTime) {
+            targetTime.setDate(targetTime.getDate() + 1);
+        }
+        const targetUnix = Math.floor(targetTime.getTime() / 1000);
+        new FlipDown(targetUnix).start();
+
+        // Animação de confete
+        function launchConfetti() {
+            const duration = 2 * 1000; // 2 segundos
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        // Botão SIM
+        document.getElementById('action-button').addEventListener('click', function() {
+            document.getElementById('checklist-container').innerHTML = "<h2>Você está pronta para descansar!</h2>";
+            launchConfetti();
+        });
+    </script>
+
+</body>
+</html>
